@@ -124,10 +124,10 @@ src="https://www.facebook.com/tr?id=1596302782100043&ev=PageView&noscript=1"
 
     <!-- ===== REPRODUCTOR VTURB (titular + botón al checkout incluidos) ===== -->
     <div class="player">
-      <vturb-smartplayer id="ab-6a484879495145c474e626e6" style="display: block; margin: 0 auto; width: 100%;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+      <vturb-smartplayer id="vid-6a505903803370bc5b2b561f" style="display: block; margin: 0 auto; width: 100%;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
       <script type="text/javascript">
         var s=document.createElement("script");
-        s.src="https://scripts.converteai.net/6192ae0a-8e24-48b7-acf1-74c0dfb556ba/ab-test/6a484879495145c474e626e6/player.js",
+        s.src="https://scripts.converteai.net/6192ae0a-8e24-48b7-acf1-74c0dfb556ba/players/6a505903803370bc5b2b561f/v4/player.js",
         s.async=!0,document.head.appendChild(s);
       </script>
     </div>
@@ -155,46 +155,21 @@ src="https://www.facebook.com/tr?id=1596302782100043&ev=PageView&noscript=1"
 
 <script>
 /* ===================================================================
-   GARANTÍA PARA A/B TEST
-   El A/B muestra VSLs con tiempos distintos, así que NO usamos un tiempo
-   fijo. Revelamos la garantía justo cuando aparece el BOTÓN DE COMPRA de
-   Vturb (que programas por variante en el panel). Así se ajusta sola a
-   cada VSL. Si me pasas el enlace del checkout, lo dejo aún más preciso
-   poniéndolo en CHECKOUT_HINT.
+   GARANTÍA SINCRONIZADA CON EL VIDEO  ·  método oficial de Vturb
+   El logo (clase .esconder) aparece SOLO cuando el video llega al
+   tiempo indicado, leyendo el tiempo REAL del reproductor. Funciona
+   aunque la persona pause el video, y queda alineado con tu botón.
+   41:22 = 41*60 + 22 = 2482 segundos.
    =================================================================== */
 (function(){
-  var CHECKOUT_HINT = "pay.hotmart.com/J106521668F";   // enlace del checkout (detección precisa del botón)
-
-  var box = document.getElementById('guarantee');
-  if(!box) return;
-  var done=false;
-  function reveal(){ if(done) return; done=true; box.classList.remove('esconder'); }
-
-  function isBtn(a){
-    var r=a.getBoundingClientRect();
-    return a.offsetParent!==null && r.width>60 && r.height>18;   // enlace visible tipo botón
-  }
-  function found(root){
-    if(!root) return false;
-    var links=root.querySelectorAll('a[href]');
-    for(var i=0;i<links.length;i++){
-      var a=links[i];
-      if(CHECKOUT_HINT){
-        if((a.href||'').indexOf(CHECKOUT_HINT)>-1 && isBtn(a)) return true;
-      } else if(isBtn(a)){ return true; }
-    }
-    return false;
-  }
-  function check(){
-    if(found(document.querySelector('.player'))){ reveal(); return true; }
-    var sp=document.querySelector('vturb-smartplayer');
-    if(sp && sp.shadowRoot && found(sp.shadowRoot)){ reveal(); return true; }
-    return false;
-  }
-
-  var obs=new MutationObserver(check);
-  obs.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class','href']});
-  var iv=setInterval(function(){ if(check()||done) clearInterval(iv); }, 700);
+  var delaySeconds = 41*60 + 22;   // ← 41:22 (cámbialo si mueves el botón/precio)
+  var player = document.querySelector("vturb-smartplayer");
+  if(!player || typeof player.addEventListener !== 'function') return;
+  player.addEventListener("player:ready", function(){
+    try {
+      player.displayHiddenElements(delaySeconds, [".esconder"], { persist: true });
+    } catch(e){}
+  });
 })();
 </script>
 </body>
