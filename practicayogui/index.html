@@ -124,10 +124,10 @@ src="https://www.facebook.com/tr?id=28193306730306746&ev=PageView&noscript=1"
 
     <!-- ===== REPRODUCTOR VTURB (titular + botón al checkout incluidos) ===== -->
     <div class="player">
-      <vturb-smartplayer id="vid-6a8859fe653d545057778b72" style="display: block; margin: 0 auto; width: 100%;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+      <vturb-smartplayer id="ab-6a8d0e46992a9863857dcacb" style="display: block; margin: 0 auto; width: 100%;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
       <script type="text/javascript">
         var s=document.createElement("script");
-        s.src="https://scripts.converteai.net/6192ae0a-8e24-48b7-acf1-74c0dfb556ba/players/6a8859fe653d545057778b72/v4/player.js",
+        s.src="https://scripts.converteai.net/6192ae0a-8e24-48b7-acf1-74c0dfb556ba/ab-test/6a8d0e46992a9863857dcacb/player.js",
         s.async=!0,document.head.appendChild(s);
       </script>
     </div>
@@ -155,21 +155,47 @@ src="https://www.facebook.com/tr?id=28193306730306746&ev=PageView&noscript=1"
 
 <script>
 /* ===================================================================
-   GARANTÍA SINCRONIZADA CON EL VIDEO  ·  método oficial de Vturb
-   El logo (clase .esconder) aparece SOLO cuando el video llega al
-   tiempo indicado, leyendo el tiempo REAL del reproductor. Funciona
-   aunque la persona pause el video, y queda alineado con tu botón.
-   46:23 = 46*60 + 23 = 2783 segundos.
+   GARANTÍA PARA A/B TEST
+   El A/B muestra 2 videos con tiempos distintos, así que NO usamos un
+   tiempo fijo. Revelamos la garantía justo cuando aparece el BOTÓN DE
+   COMPRA de Vturb (que programas por variante en el panel). Así se
+   ajusta sola a cada video.
+   Pega el enlace del checkout de ESTA oferta en CHECKOUT_HINT para que
+   la detección sea exacta.
    =================================================================== */
 (function(){
-  var delaySeconds = 46*60 + 23;   // ← 46:23 (cámbialo si mueves el botón/precio)
-  var player = document.querySelector("vturb-smartplayer");
-  if(!player || typeof player.addEventListener !== 'function') return;
-  player.addEventListener("player:ready", function(){
-    try {
-      player.displayHiddenElements(delaySeconds, [".esconder"], { persist: true });
-    } catch(e){}
-  });
+  var CHECKOUT_HINT = "pay.hotmart.com/J107271662T";   // enlace del checkout de esta oferta (detección precisa del botón)
+
+  var box = document.getElementById('guarantee');
+  if(!box) return;
+  var done=false;
+  function reveal(){ if(done) return; done=true; box.classList.remove('esconder'); }
+
+  function isBtn(a){
+    var r=a.getBoundingClientRect();
+    return a.offsetParent!==null && r.width>60 && r.height>18;
+  }
+  function found(root){
+    if(!root) return false;
+    var links=root.querySelectorAll('a[href]');
+    for(var i=0;i<links.length;i++){
+      var a=links[i];
+      if(CHECKOUT_HINT){
+        if((a.href||'').indexOf(CHECKOUT_HINT)>-1 && isBtn(a)) return true;
+      } else if(isBtn(a)){ return true; }
+    }
+    return false;
+  }
+  function check(){
+    if(found(document.querySelector('.player'))){ reveal(); return true; }
+    var sp=document.querySelector('vturb-smartplayer');
+    if(sp && sp.shadowRoot && found(sp.shadowRoot)){ reveal(); return true; }
+    return false;
+  }
+
+  var obs=new MutationObserver(check);
+  obs.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class','href']});
+  var iv=setInterval(function(){ if(check()||done) clearInterval(iv); }, 700);
 })();
 </script>
 </body>
