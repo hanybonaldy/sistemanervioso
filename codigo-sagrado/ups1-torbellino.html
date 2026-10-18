@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- ===== PAGINA: /ups1 · video vid-6ad15f959cddf86b15eadc2d ===== -->
+<!-- ===== PAGINA: /ups1 · video vid-6ad43f9ad97f2ee214dbb70b ===== -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -33,7 +33,7 @@ src="https://www.facebook.com/tr?id=1097671867689796&ev=PageView&noscript=1"
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0c0904;
@@ -51,7 +51,7 @@ src="https://www.facebook.com/tr?id=1097671867689796&ev=PageView&noscript=1"
   body{
     background:var(--bg);
     color:var(--text);
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
@@ -66,10 +66,13 @@ src="https://www.facebook.com/tr?id=1097671867689796&ev=PageView&noscript=1"
 
   /* ---------- Reproductor (protagonista) ---------- */
   .player{
+    position:relative;
     margin:0 auto;width:100%;
-    border-radius:12px;overflow:hidden;
-    box-shadow:0 26px 70px rgba(0,0,0,.7), 0 0 0 1px var(--line),
-               0 0 0 4px rgba(95,163,224,.06);
+    border-radius:14px;overflow:hidden;
+    border:3px solid var(--gold);
+    box-shadow:0 26px 70px rgba(0,0,0,.7),
+               inset 0 0 0 1px rgba(0,0,0,.55),
+               0 0 30px rgba(230,184,79,.6);
   }
 
   /* ---------- Aviso de sonido (ahora DEBAJO del video) ---------- */
@@ -109,26 +112,62 @@ src="https://www.facebook.com/tr?id=1097671867689796&ev=PageView&noscript=1"
     .guarantee img{animation:none}
     .sound .pulse{animation:none}
   }
+
+  /* ---------- Elementos de urgencia (upsell) ---------- */
+  .urgent-bar{
+    position:sticky;top:0;z-index:50;
+    background:#e6a93a;color:#2a1502;
+    text-align:center;font-weight:700;font-size:14.5px;line-height:1.4;
+    padding:11px 16px;box-shadow:0 2px 16px rgba(0,0,0,.45);
+  }
+  .urgent-bar b{color:#9a1709;}
+  .alert-head{text-align:center;margin:24px auto 18px;padding:0 16px}
+  .alert-head .big{
+    display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+    font-weight:800;font-size:26px;line-height:1.2;color:var(--cream);
+    text-shadow:0 2px 14px rgba(0,0,0,.6);
+  }
+  .alert-head .warn{width:30px;height:30px;flex:none}
+  .alert-head .sub{margin-top:8px;font-size:16.5px;font-weight:600;color:var(--gold);
+    text-shadow:0 2px 12px rgba(0,0,0,.6)}
+  .do-now{
+    max-width:620px;margin:18px auto 0;text-align:center;
+    font-size:17px;line-height:1.55;color:#fff;font-weight:500;
+    background:rgba(18,12,4,.82);border:1px solid rgba(230,169,58,.55);
+    border-radius:12px;padding:15px 20px;
+    text-shadow:0 1px 6px rgba(0,0,0,.55);
+    box-shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+  .do-now b{color:var(--gold)}
+  @media (max-width:480px){
+    .urgent-bar{font-size:13px}
+    .alert-head .big{font-size:21px}
+    .alert-head .sub{font-size:15px}
+  }
 </style>
 </head>
 <body>
 
+  <!-- ===== Barra de urgencia (fija arriba) ===== -->
+  <div class="urgent-bar">
+    <b>IMPORTANTE:</b> No cierres esta página ni presiones el botón de atrás. Esto puede generar problemas con tu pedido.
+  </div>
+
+
   <div class="wrap">
 
-    <!-- ===== TITULAR OPCIONAL DE PÁGINA =====
-         Tu titular ya va dentro del reproductor de Vturb. Si quieres además
-         un titular en la página, descomenta este bloque:
-    <h1 style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;line-height:1.18;color:var(--cream);margin:0 auto 18px;max-width:20ch;text-shadow:0 2px 18px rgba(0,0,0,.6)">
-      Tu <span style="color:var(--gold)">titular</span> aquí
-    </h1>
-    -->
+    <!-- ===== Titular de alerta (urgencia upsell) ===== -->
+    <div class="alert-head">
+      <div class="big"><svg class="warn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6L23 21H1L12 2.6z" fill="#e23b2e"/><rect x="11" y="9" width="2" height="6" rx="1" fill="#fff"/><circle cx="12" cy="17.6" r="1.3" fill="#fff"/></svg> ¡Tu pedido aún no está completo! <svg class="warn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6L23 21H1L12 2.6z" fill="#e23b2e"/><rect x="11" y="9" width="2" height="6" rx="1" fill="#fff"/><circle cx="12" cy="17.6" r="1.3" fill="#fff"/></svg></div>
+      <div class="sub">Mira el mensaje a continuación 👇</div>
+    </div>
 
     <!-- ===== REPRODUCTOR VTURB (titular + botón al checkout incluidos) ===== -->
     <div class="player">
-      <vturb-smartplayer id="vid-6ad15f959cddf86b15eadc2d" style="display: block; margin: 0 auto; width: 100%;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+      <vturb-smartplayer id="vid-6ad43f9ad97f2ee214dbb70b" style="display: block; margin: 0 auto; width: 100%;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
       <script type="text/javascript">
         var s=document.createElement("script");
-        s.src="https://scripts.converteai.net/6192ae0a-8e24-48b7-acf1-74c0dfb556ba/players/6ad15f959cddf86b15eadc2d/v4/player.js",
+        s.src="https://scripts.converteai.net/6192ae0a-8e24-48b7-acf1-74c0dfb556ba/players/6ad43f9ad97f2ee214dbb70b/v4/player.js",
         s.async=!0,document.head.appendChild(s);
       </script>
     </div>
@@ -139,7 +178,12 @@ src="https://www.facebook.com/tr?id=1097671867689796&ev=PageView&noscript=1"
       <span class="pulse">Asegúrate de tener el sonido de tu dispositivo encendido</span>
     </div>
 
-    <!-- ===== EMBUDO HOTMART (oculto; aparece a 22:05 junto con la garantía) ===== -->
+    <!-- Nota de acción (urgencia upsell) -->
+    <div class="do-now">
+      <b>Haz esto ahora:</b> mira el mensaje de arriba hasta el final. Tu acceso y los detalles aparecerán aquí abajo.
+    </div>
+
+    <!-- ===== EMBUDO HOTMART (oculto; aparece a 21:40 junto con la garantía) ===== -->
     <div class="funnel-oculto">
       <!-- HOTMART - Sales Funnel Widget -->
       <div id="hotmart-sales-funnel"></div>
@@ -178,7 +222,7 @@ src="https://www.facebook.com/tr?id=1097671867689796&ev=PageView&noscript=1"
    22:05 = 22*60 + 5 = 1325 segundos.
    =================================================================== */
 (function(){
-  var delaySeconds = 22*60 + 5;   // ← 22:05 (cámbialo si mueves el pitch)
+  var delaySeconds = 21*60 + 40;   // ← 21:40 (cámbialo si mueves el pitch)
   var player = document.querySelector("vturb-smartplayer");
   if(!player || typeof player.addEventListener !== 'function') return;
   player.addEventListener("player:ready", function(){
