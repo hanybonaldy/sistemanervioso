@@ -66,10 +66,13 @@ src="https://www.facebook.com/tr?id=1097671867689796&ev=PageView&noscript=1"
 
   /* ---------- Reproductor (protagonista) ---------- */
   .player{
+    position:relative;
     margin:0 auto;width:100%;
-    border-radius:12px;overflow:hidden;
-    box-shadow:0 26px 70px rgba(0,0,0,.7), 0 0 0 1px var(--line),
-               0 0 0 4px rgba(95,163,224,.06);
+    border-radius:14px;overflow:hidden;
+    border:3px solid var(--gold);
+    box-shadow:0 26px 70px rgba(0,0,0,.7),
+               inset 0 0 0 1px rgba(0,0,0,.55),
+               0 0 30px rgba(230,184,79,.6);
   }
 
   /* ---------- Aviso de sonido (ahora DEBAJO del video) ---------- */
